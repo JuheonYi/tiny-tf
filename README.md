@@ -1,9 +1,11 @@
-# Tiny Face Detector - tf 
+# Tiny Face Detector in TensorFlow Python3
 This is the python3 support version of https://github.com/Timforce/tiny-tf
 
 I modified the changes in module names, syntaxes, and so on so that the code runs in python3.
 
 All the codes for train/eval/demo seem to work now, but I plan to keep testing for any flaws and update.
+
+Tested with TensorFlow 1.12.0, CUDA 9.0, CUDNN 7.4.1, and Python 3.5.2
 
 **Below is the original README of the repository**
 
