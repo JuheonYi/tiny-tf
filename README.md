@@ -1,4 +1,13 @@
-# Tiny Face Detector - tf
+# Tiny Face Detector - tf 
+This is the python3 support version of https://github.com/Timforce/tiny-tf
+
+I modified the changes in module names, syntaxes, and so on so that the code runs in python3.
+
+All the codes for train/eval/demo seem to work now, but I plan to keep testing for any flaws and update.
+
+**Below is the original README of the repository**
+
+# Tiny Face Detector - tf 
 This is tensorflow version of [Finding Tiny Faces][paper-link] by Peiyun Hu, Deva Ramanan. \
 Instead of transforming pretrained network parameters from .mat file, this code solely train the network from scratch with [Tensorflow][tf] only.
 
