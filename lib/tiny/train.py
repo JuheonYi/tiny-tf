@@ -10,7 +10,8 @@ import tensorflow as tf
 import os
 import cv2
 import math
-import cPickle
+#import cPickle
+import _pickle as cPickle
 
 from ..roi_data_layer.layer import RoIDataLayer
 from ..utils.timer import Timer
@@ -49,7 +50,7 @@ class SolverWrapper(object):
         filename = os.path.join(self.output_dir, filename)
 
         self.saver.save(sess, filename, global_step=iter)
-        print 'Wrote snapshot to: {:s}'.format(filename)
+        print('Wrote snapshot to: {:s}'.format(filename))
 
     def build_image_summary(self):
         # Image visualization in tensorboard 'image', may not be accurate detection result!
@@ -120,8 +121,7 @@ class SolverWrapper(object):
         # load pre-trained CNN network.
         if self.pretrained_model is not None and not restore:
             try:
-                print ('Loading pretrained model '
-                   'weights from {:s}').format(self.pretrained_model)
+                print ('Loading pretrained model weights from {:s}'.format(self.pretrained_model))
                 self.net.load(self.pretrained_model, sess, True)
             except:
                 raise 'Check your pretrained model {:s}'.format(self.pretrained_model)
@@ -130,19 +130,19 @@ class SolverWrapper(object):
         if restore:
             try:
                 ckpt = tf.train.get_checkpoint_state(self.output_dir)
-                print 'Restoring from {}...'.format(ckpt.model_checkpoint_path),
+                print('Restoring from {}...'.format(ckpt.model_checkpoint_path))
                 self.saver.restore(sess, ckpt.model_checkpoint_path)
                 stem = os.path.splitext(os.path.basename(ckpt.model_checkpoint_path))[0]
                 restore_iter = int(stem.split('-')[-1])
                 sess.run(global_step.assign(restore_iter))
-                print 'done'
+                print('done')
             except:
-                print 'Failed to find a checkpoint!'
+                print('Failed to find a checkpoint!')
                 sys.exit(1)
 
         last_snapshot_iter = -1
         iter_per_epoch = int(len(self.roidb)/cfg.TRAIN.BATCH_SIZE)
-        restore_epoch = (restore_iter+1) / iter_per_epoch
+        restore_epoch = int((restore_iter+1) / iter_per_epoch)
         # Only use the following if you want learning rate drop by specified GAMMA value during training, default to not using
         '''
         for _ in range(0, int(restore_iter / cfg.TRAIN.STEPSIZE)):
@@ -189,7 +189,7 @@ class SolverWrapper(object):
 
             # Generating image visualization in tensorboard every LOG_IMAGE_ITERS steps
             if (iter+1) % cfg.TRAIN.LOG_IMAGE_ITERS == 0:
-                print 'Generating image log...'
+                print('Generating image log...')
                 ori_im = np.squeeze(blobs['orig_img'])
                 ori_im = ori_im.astype(dtype=np.uint8, copy=False)
                 ori_im = _draw_gt_to_image(ori_im, blobs['gen_bbox'])
@@ -213,9 +213,9 @@ class SolverWrapper(object):
 
             # Printing training information in terminal
             if (iter) % (cfg.TRAIN.DISPLAY) == 0:
-                print 'Epoch: [%02d/%02d], iter: [%d/%d], Loss: %.4f, det_loss: %.4f, huber_loss: %.4f, lr: %f, lr2: %f'%\
-                        ((epoch+1), epochs, (e_iter+1), iter_per_epoch, loss_value, det_loss_value, huber_loss_value, lr.eval(), lr2.eval())
-                print 'speed: {:.3f}s / iter'.format(_diff_time)
+                print('Epoch: [%02d/%02d], iter: [%d/%d], Loss: %.4f, det_loss: %.4f, huber_loss: %.4f, lr: %f, lr2: %f'%\
+                        ((epoch+1), epochs, (e_iter+1), iter_per_epoch, loss_value, det_loss_value, huber_loss_value, lr.eval(), lr2.eval()))
+                print('speed: {:.3f}s / iter'.format(_diff_time))
 
             # Save a checkpoint every epoch
             if (iter+1) % iter_per_epoch == 0:
@@ -233,7 +233,7 @@ def get_training_roidb(pkl_file):
     with open(pkl_file, 'rb') as fid:
         roidb = cPickle.load(fid)
     assert (len(roidb) > 0), 'No data loaded!'
-    print 'Loaded roidb done!'
+    print('Loaded roidb done!')
     return roidb
 
 def get_data_layer(roidb, centers, num_classes):
@@ -338,6 +338,6 @@ def train_net(network, roidb, output_dir, log_dir, ref_Box, pretrained_model=Non
     config.gpu_options.allow_growth = True
     with tf.Session(config=config) as sess:
         sw = SolverWrapper(sess, network, roidb, output_dir, logdir=log_dir, centers=ref_Box, pretrained_model=pretrained_model)
-        print 'Solving...'
+        print('Solving...')
         sw.train_model(sess, epochs, restore=restore)
-        print 'done solving'
+        print('done solving')

@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from .config import cfg
 from ..utils.timer import Timer
 from matplotlib import cm
+import imageio
 
 def normalizer_blob(im, rgb_means):
     # Basically just subtracted the already cropped image with means.
@@ -165,10 +166,13 @@ def demo_net(sess, net, centers_ref, weights_filename, dir_path):
 
     det_count = 0
     for file_name in os.listdir(source_dir):
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("imread:", os.path.join(source_dir, file_name))
         ext = os.path.splitext(file_name)[1]
         if ext.lower() not in valid_images:
             continue
         im = cv2.imread(os.path.join(source_dir, file_name))
+        #im = imageio.imread(os.path.join(source_dir, file_name))
 
         # This part auto-decide image pyramid ratio range
         min_scale = min(np.floor(np.log2(max(clusters_w[normal_idx]/im.shape[1]))), \
@@ -208,11 +212,13 @@ def demo_net(sess, net, centers_ref, weights_filename, dir_path):
         if cfg.DEMO.VISUALIZE:
             output_dest = os.path.join(output_dir, file_name)
             im = cv2.imread(os.path.join(source_dir, file_name))
+            #im = imageio.imread(os.path.join(source_dir, file_name))
+            print("source dir:", os.path.join(source_dir, file_name))
             vis_detections(im, res, conf, output_dest)
 
         det_count = det_count + 1
-        print 'Im_detect: ({:d}) {:s}, {:.3f}s {:.3f}s' \
-              .format(det_count, file_name, detect_time, nms_time)
+        print('Im_detect: ({:d}) {:s}, {:.3f}s {:.3f}s' \
+              .format(det_count, file_name, detect_time, nms_time))
 
     if cfg.DEMO.VISUALIZE:
-        print 'Visualize result store at: {:s}'.format(output_dir)
+        print('Visualize result store at: {:s}'.format(output_dir))

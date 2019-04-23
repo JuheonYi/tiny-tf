@@ -46,16 +46,18 @@ class Network(object):
         raise NotImplementedError('Must be subclassed.')
 
     def load(self, data_path, session, ignore_missing=False):
-        data_dict = np.load(data_path).item()
+        #data_dict = np.load(data_path).item()
+        data_dict = np.load(data_path, encoding = 'latin1').item()
+
         for key in data_dict:
             with tf.variable_scope(key, reuse=True):
                 for subkey in data_dict[key]:
                     try:
                         var = tf.get_variable(subkey)
                         session.run(var.assign(data_dict[key][subkey]))
-                        print "assign pretrain model "+subkey+ " to "+key
+                        print("assign pretrain model "+subkey+ " to "+key)
                     except ValueError:
-                        print "ignore "+key
+                        print("ignore "+key)
                         if not ignore_missing:
 
                             raise
@@ -64,12 +66,14 @@ class Network(object):
         assert len(args)!=0
         self.inputs = []
         for layer in args:
-            if isinstance(layer, basestring):
+            #basestring was replaced to str in python3
+            #if isinstance(layer, basestring):
+            if isinstance(layer, str):
                 try:
                     layer = self.layers[layer]
-                    print layer
+                    print(layer)
                 except KeyError:
-                    print self.layers.keys()
+                    print(self.layers.keys())
                     raise KeyError('Unknown layer name fed: %s'%layer)
             self.inputs.append(layer)
         return self
@@ -78,7 +82,7 @@ class Network(object):
         try:
             layer = self.layers[layer]
         except KeyError:
-            print self.layers.keys()
+            print(self.layers.keys())
             raise KeyError('Unknown layer name fed: %s'%layer)
         return layer
 

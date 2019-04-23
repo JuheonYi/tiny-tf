@@ -8,8 +8,10 @@ from Cython.Distutils import build_ext
 
 try:
     numpy_include = np.get_include()
+    print("numpy include:", numpy_include)
 except AttributeError:
     numpy_include = np.get_numpy_include()
+    print("numpy include:", numpy_include)
 
 class custom_build_ext(build_ext):
     def build_extensions(self):

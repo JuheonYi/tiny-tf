@@ -1,1 +1,1 @@
-import tiny
+import lib.tiny

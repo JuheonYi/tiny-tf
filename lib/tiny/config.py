@@ -79,9 +79,12 @@ def _merge_a_into_b(a, b):
     if type(a) is not edict:
         return
 
-    for k, v in a.iteritems():
+    # .iteritems() changed to items() in python3
+    for k, v in a.items():
         # a must specify keys that are in b
-        if not b.has_key(k):
+        #if not b.has_key(k):
+        # changed to not in in python3
+        if k not in b:
             raise KeyError('{} is not a valid config key'.format(k))
 
         # the types must match, too

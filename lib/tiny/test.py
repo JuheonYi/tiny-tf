@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
-import cPickle
+#import cPickle
+import pickle
 import os
 import math
 import tensorflow as tf
@@ -103,7 +104,7 @@ def test_net(sess, net, roidb_path, centers_ref, weights_filename, dir_path):
     """Test a tiny face detector network on an image database."""
     # Load the validation dataset
     with open(roidb_path, 'rb') as fid:
-        roidb = cPickle.load(fid)
+        roidb = pickle.load(fid)
     fid.close()
     num_images = len(roidb)
 
@@ -128,7 +129,7 @@ def test_net(sess, net, roidb_path, centers_ref, weights_filename, dir_path):
     _t = {'im_detect' : Timer(), 'misc' : Timer()}
 
     # Iterate through whole validation dataset
-    for i in xrange(num_images):
+    for i in range(num_images):
         im = cv2.imread(roidb[i]['image'])
         _t['im_detect'].tic()
         # Create empty arrays for detected bounding boxes
@@ -178,5 +179,5 @@ def test_net(sess, net, roidb_path, centers_ref, weights_filename, dir_path):
                     text_file.write('{:d} {:d} {:d} {:d} {:0.3f}\n'.format(int(x1), int(y1), int(x2-x1+1), int(y2-y1+1), float(conf[ind])))
             text_file.close()
 
-        print 'im_detect: {:d}/{:d} {:.3f}s {:.3f}s' \
-              .format(i + 1, num_images, detect_time, nms_time)
+        print('im_detect: {:d}/{:d} {:.3f}s {:.3f}s' \
+              .format(i + 1, num_images, detect_time, nms_time))

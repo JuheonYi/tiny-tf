@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python ./train_net.py \
+python3 ./train_net.py \
 --gpu 0 \
 --epochs 50 \
 --weights ./data/pretrain_model/Resnet101.npy \

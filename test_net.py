@@ -66,16 +66,16 @@ if __name__ == '__main__':
     # Read the anchor information from .mat file
     refBox_file = os.path.abspath(args.refBox)
     centers_ref = scipy.io.loadmat(refBox_file)['clusters']
-    print 'Use reference box file `{:s}`.'.format(os.path.basename(refBox_file))
+    print('Use reference box file `{:s}`.'.format(os.path.basename(refBox_file)))
     
     roidb_path = os.path.abspath(args.pkl_name)
-    print 'Use pkl file `{:s}` as file income'.format(os.path.basename(roidb_path))
+    print('Use pkl file `{:s}` as file income'.format(os.path.basename(roidb_path)))
 
     device_name = '/gpu:{:d}'.format(args.gpu_id)
-    print device_name
+    print(device_name)
 
     network = get_network(args.network_name)
-    print 'Use network `{:s}` for testing'.format(args.network_name)
+    print('Use network `{:s}` for testing'.format(args.network_name))
 
     cfg.GPU_ID = args.gpu_id
 
@@ -89,11 +89,11 @@ if __name__ == '__main__':
         if ckpt and ckpt.model_checkpoint_path:
             ckpt_name = os.path.basename(ckpt.model_checkpoint_path)
             saver.restore(sess, os.path.join(checkpoint_dir, ckpt_name))
-            print 'Success to load checkpoint from {}'.format(ckpt_name)
+            print('Success to load checkpoint from {}'.format(ckpt_name))
         else:
-            print 'Failed to find a checkpoint!'
+            print('Failed to find a checkpoint!')
     except:
-        print 'Error reading checkpoint file!'
+        print('Error reading checkpoint file!')
         sys.exit(1)
     test_net(sess, network, roidb_path, centers_ref, weights_filename, dir_path)
 

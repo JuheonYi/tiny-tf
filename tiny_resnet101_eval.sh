@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python ./test_net.py \
+python3 ./test_net.py \
 --gpu 0 \
 --weights ./output/Resnet101_tiny/ \
 --cfg ./cfgs/tiny_resnet101.yml \

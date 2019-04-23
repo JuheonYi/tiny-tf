@@ -101,7 +101,7 @@ if __name__ == '__main__':
     print('Using config:')
     pprint.pprint(cfg)
 
-    print 'Loaded pickles `{:s}` for training'.format(os.path.basename(args.pkl_name))
+    print('Loaded pickles `{:s}` for training'.format(os.path.basename(args.pkl_name)))
     roidb = get_training_roidb(args.pkl_name)
 
     if ((args.restore) and (args.restore_dir is not None)):
@@ -110,20 +110,20 @@ if __name__ == '__main__':
         output_dir = get_output_dir(args.output_dir, args.network_name)
 
     log_dir = get_log_dir(args.log_dir)
-    print 'Output will be saved to `{:s}`'.format(output_dir)
-    print 'Logs will be saved to `{:s}`'.format(log_dir)
+    print('Output will be saved to `{:s}`'.format(output_dir))
+    print('Logs will be saved to `{:s}`'.format(log_dir))
 
     device_name = '/gpu:{:d}'.format(args.gpu_id)
-    print device_name
+    print(device_name)
 
     network = get_network(args.network_name)
-    print 'Use network `{:s}` in training'.format(args.network_name)
+    print('Use network `{:s}` in training'.format(args.network_name))
     
     refBox_file = os.path.abspath(args.refBox)
     centers_read = scipy.io.loadmat(refBox_file)['clusters']
     centers_read = centers_read.astype(np.float32)
-    print 'Use reference box file `{:s}` in training'.format(os.path.basename(refBox_file))
-    print 'Load done!'
+    print('Use reference box file `{:s}` in training'.format(os.path.basename(refBox_file)))
+    print('Load done!')
 
     train_net(network, roidb,
               output_dir=output_dir,

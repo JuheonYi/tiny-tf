@@ -9,3 +9,6 @@ data/
 demo/
 pred/
 log/
+
+WIDER/*
+*.tar.gz

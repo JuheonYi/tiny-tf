@@ -9,6 +9,14 @@ Instead of transforming pretrained network parameters from .mat file, this code 
 
 [tiny]:https://github.com/peiyunh/tiny
 
+**Where to change:**
+./lib/tiny/test.py:        im = cv2.imread(roidb[i]['image'])
+./lib/tiny/demo.py:        cv2.imwrite(output_dest, output_img)
+./lib/tiny/demo.py:        im = cv2.imread(os.path.join(source_dir, file_name))
+./lib/tiny/demo.py:            im = cv2.imread(os.path.join(source_dir, file_name))
+./lib/utils/wider2pkl_detail.py:                    img = cv2.imread(img_file)
+
+
 ## Requirements
 `python=2.7 tensorflow-gpu numpy scipy scikit-learn matplotlib opencv-python Cython easydict pyyaml`
 

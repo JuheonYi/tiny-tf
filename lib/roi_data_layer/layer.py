@@ -9,7 +9,8 @@ The data layer is used specifically for tiny face detection network
 Mod from:
 https://github.com/CharlesShang/TFFRCNN/blob/master/lib/roi_data_layer/layer.py
 """
-
+import pyximport
+pyximport.install()
 import numpy as np
 from ..tiny.config import cfg
 from ..roi_data_layer.minibatch import get_minibatch

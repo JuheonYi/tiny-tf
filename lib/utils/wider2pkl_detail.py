@@ -3,7 +3,7 @@ import argparse
 import cv2, os
 import numpy as np
 import scipy.io
-import cPickle
+import pickle
 
 def parse_args():
     """
@@ -32,7 +32,7 @@ if __name__ == '__main__':
         wider_root = args.img_root
         label_file = args.label
     except:
-        print 'Dataset root or annotation file does not exist!'
+        print('Dataset root or annotation file does not exist!')
         sys.exit
         
     cache_file = args.out_name
@@ -69,7 +69,7 @@ if __name__ == '__main__':
                     img_height = img_size[0]
                     img_depth = img_size[2]
                 except:
-                    print 'Cant read image!'
+                    print('Cant read image!')
                     sys.exit(1)
                 for ssind, ssid in enumerate(sid):
                     boxes = np.zeros((len(ssid), 4), dtype=np.int32)
@@ -99,6 +99,6 @@ if __name__ == '__main__':
                 gt_roidb.append(info)
 
     with open(cache_file, 'wb') as fid:
-        cPickle.dump(gt_roidb, fid, cPickle.HIGHEST_PROTOCOL)
-    print 'Wrote gt roidb to {}'.format(cache_file)
+        pickle.dump(gt_roidb, fid, pickle.HIGHEST_PROTOCOL)
+    print('Wrote gt roidb to {}'.format(cache_file))
     fid.close()
