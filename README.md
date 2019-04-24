@@ -4,9 +4,12 @@ This is the python3 support version of https://github.com/Timforce/tiny-tf
 I modified the changes in module names, syntaxes, and so on so that the code runs in Python3.
 
 All the codes for train/eval/demo seem to work well. 
-Trained result for WIDERFACE 'hard' set using WIDERFACE evaluation tool at http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/WiderFace_Results.html#Evaluation shows 0.78, which is very close to 0.814 of the original paper.
+Trained result for WIDERFACE 'hard' set using [WIDERFACE evaluation tool][wider-eval] shows 0.78, which is very close to 0.814 of the original paper.
 
-Thanks to [TimForce]:https://github.com/Timforce for nice codes!
+Thanks to [TimForce][author] for such nice codes!
+
+[wider-eval]:http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/WiderFace_Results.html#Evaluation
+[author]:https://github.com/Timforce
 
 ![WIDERFACE validation result on 'hard' set](https://github.com/JuheonYi/tiny-tf/blob/master/example.png)
 
