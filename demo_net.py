@@ -91,7 +91,7 @@ if __name__ == '__main__':
         print('Error reading checkpoint file!')
         sys.exit(1)
     demo_net(sess, network, centers_ref, weights_filename, dir_path)
-
+    #print("clusters:", centers_ref.shape, centers_ref)
     # The following is used for loading pre-trained parameters from .npy file, NOT compatible with ckpt file.
     '''
     config = tf.ConfigProto(allow_soft_placement=True)

@@ -4,7 +4,6 @@
 # Licensed under The MIT License [see LICENSE for details]
 # Written by miraclebiu
 # --------------------------------------------------------
-
 import tensorflow as tf
 from .network import Network
 from ..tiny.config import cfg

@@ -36,6 +36,7 @@ def im_detect(sess, net, centers_ref, im, ratio, rgb_means):
     # score_cls_np: Score_heatmap(non-sigmoid), score_reg_np: Regression_heatmap, prob_cls_np: Score_heatmap(Sigmoid)
     score_cls_np, score_reg_np, prob_cls_np = sess.run(fetches=fetch_list, feed_dict=feed_dict)
     boxes, scores = _process_boxes_scores(prob_cls_np[0, :, :, :], score_reg_np[0, :, :, :], score_cls_np[0, :, :, :], centers_ref, ratio)
+   
     return boxes, scores
 
 def nms(boxes, score, overlapThresh=0.5):
@@ -77,6 +78,7 @@ def _process_boxes_scores(prob_cls_np, score_reg_np, score_cls_np, centers, rati
 
     # Determine spatial location of face heatmap
     fy, fx, fc = np.where(prob_cls_np > cfg.DEMO.CONFIDENCE_Thresh)
+    
     # Pre-processing information for bounding-box regression
     Nt = centers.shape[0]
     tx = score_reg_np[:,:,0:Nt]
@@ -180,6 +182,8 @@ def demo_net(sess, net, centers_ref, weights_filename, dir_path):
         max_scale = min(1, -np.log2(max(im.shape[0], im.shape[1])/cfg.DEMO.MAX_INPUT_DIM))
         scales = np.concatenate((np.arange(min_scale, 0), np.arange(0, max_scale+1e-4, 1)))
         scales = 2**scales
+        
+        print("scale list:", scales)
 
         _t['im_detect'].tic()
         final_boxes = np.zeros([0, 4])
